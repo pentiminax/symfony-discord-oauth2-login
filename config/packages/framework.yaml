@@ -17,6 +17,11 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+        scoped_clients:
+            discord_api.client:
+                base_uri: 'https://discord.com'
+
 when@test:
     framework:
         test: true

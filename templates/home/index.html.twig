@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Discord Authentication{% endblock %}
+
+{% block body %}
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a class="btn-primary text-decoration-none" href="{{ path('oauth_discord') }}">Connexion</a>
+    {% else %}
+        <a class="btn-primary text-decoration-none" href="{{ path('app_logout') }}">Déconnexion</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+.btn-primary {
+    min-width: 130px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 20px;
+    border: 2px solid #4433ff;
+    background: #4433ff;
+}
+.btn-primary:hover {
+    background: #fff;
+    color: #4433ff
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
