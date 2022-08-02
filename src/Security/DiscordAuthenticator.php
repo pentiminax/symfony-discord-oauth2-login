@@ -49,8 +49,6 @@ class DiscordAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
-
         return new RedirectResponse($this->router->generate('app_home'));
     }
 }
