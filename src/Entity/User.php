@@ -26,10 +26,10 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'string', length: 32)]
-    private $discordId;
+    private ?string $discordId;
 
     #[ORM\Column(type: 'string', length: 32)]
-    private $avatar;
+    private ?string $avatar;
 
     public function getId(): ?int
     {
@@ -98,12 +98,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDiscordId(): ?int
+    public function getDiscordId(): ?string
     {
         return $this->discordId;
     }
 
-    public function setDiscordId(int $discordId): self
+    public function setDiscordId(string $discordId): self
     {
         $this->discordId = $discordId;
 

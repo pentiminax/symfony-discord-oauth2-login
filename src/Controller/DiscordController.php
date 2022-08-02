@@ -53,6 +53,7 @@ class DiscordController extends AbstractController
         }
 
         $user = new User();
+
         $user->setUsername($discordUser->username);
         $user->setEmail($discordUser->email);
         $user->setAvatar($discordUser->avatar);
