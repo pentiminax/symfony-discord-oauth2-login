@@ -17,7 +17,6 @@ class HomeController extends AbstractController
     #[Route('/logout', name: 'app_logout')]
     public function logout(): Response
     {
-
+        throw new \Exception();
     }
-
 }
