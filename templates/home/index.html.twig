@@ -7,5 +7,7 @@
         <a class="btn-primary text-decoration-none" href="{{ path('oauth_discord') }}">Connexion</a>
     {% else %}
         <a class="btn-primary text-decoration-none" href="{{ path('app_logout') }}">Déconnexion</a>
+        <p>Bonjour {{ app.user.username }}</p>
+        <img src="{{ app.user.avatar }}" />
     {% endif %}
 {% endblock %}

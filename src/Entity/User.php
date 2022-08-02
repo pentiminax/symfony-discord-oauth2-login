@@ -55,7 +55,7 @@ class User implements UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -112,7 +112,7 @@ class User implements UserInterface
 
     public function getAvatar(): ?string
     {
-        return $this->avatar;
+        return "https://cdn.discordapp.com/avatars/{$this->discordId}/{$this->avatar}.webp";
     }
 
     public function setAvatar(string $avatar): self
