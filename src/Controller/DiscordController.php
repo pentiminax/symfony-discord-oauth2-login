@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use App\Service\DiscordApiService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +20,18 @@ class DiscordController extends AbstractController
     {
     }
 
-    #[Route('/discord/connect', name: 'oauth_discord')]
-    public function connect(): Response
+    #[Route('/discord/connect', name: 'oauth_discord', methods: ['POST'])]
+    public function connect(Request $request): Response
     {
-        $scope = ['identify', 'email'];
+        $token = $request->request->get('token');
 
-        return $this->redirect($this->discordApiService->getAuthorizationUrl($scope));
+        if ($this->isCsrfTokenValid('discord-auth', $token)) {
+            $request->getSession()->set('discord-auth', true);
+            $scope = ['identify', 'email'];
+            return $this->redirect($this->discordApiService->getAuthorizationUrl($scope));
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/discord/auth', name: 'oauth_discord_auth')]
@@ -48,12 +55,13 @@ class DiscordController extends AbstractController
 
         if ($user) {
             return $this->redirectToRoute('oauth_discord_auth', [
-                'userId' => $user->getId()
+                'accessToken' => $accessToken
             ]);
         }
 
         $user = new User();
 
+        $user->setAccessToken($accessToken);
         $user->setUsername($discordUser->username);
         $user->setEmail($discordUser->email);
         $user->setAvatar($discordUser->avatar);
@@ -62,6 +70,8 @@ class DiscordController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->redirectToRoute('oauth_discord_auth');
+        return $this->redirectToRoute('oauth_discord_auth', [
+            'accessToken' => $accessToken
+        ]);
     }
 }

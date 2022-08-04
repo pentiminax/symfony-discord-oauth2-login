@@ -10,9 +10,5 @@ class DiscordUser
 
     public string $avatar;
 
-    public ?string $bannerColor;
-
-    public ?int $accentColor;
-
     public ?string $email;
 }

@@ -31,6 +31,9 @@ class User implements UserInterface
     #[ORM\Column(type: 'string', length: 32)]
     private ?string $avatar;
 
+    #[ORM\Column(length: 255)]
+    private ?string $accessToken = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,7 +58,7 @@ class User implements UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string)$this->email;
+        return "{$this->username}-{$this->email}";
     }
 
     /**
@@ -118,6 +121,18 @@ class User implements UserInterface
     public function setAvatar(string $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getAccessToken(): ?string
+    {
+        return $this->accessToken;
+    }
+
+    public function setAccessToken(string $accessToken): self
+    {
+        $this->accessToken = $accessToken;
 
         return $this;
     }

@@ -3,11 +3,30 @@
 {% block title %}Discord Authentication{% endblock %}
 
 {% block body %}
-    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-        <a class="btn-primary text-decoration-none" href="{{ path('oauth_discord') }}">Connexion</a>
-    {% else %}
-        <a class="btn-primary text-decoration-none" href="{{ path('app_logout') }}">Déconnexion</a>
-        <p>Bonjour {{ app.user.username }}</p>
-        <img src="{{ app.user.avatar }}" />
-    {% endif %}
+    <main class="form-signin text-center w-100 m-auto">
+        <div class="container">
+
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% for message in app.flashes('danger') %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                <form action="{{ path('oauth_discord') }}" method="post">
+                    <input type="hidden" name="token" value="{{ csrf_token('discord-auth') }}"/>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Connexion avec Discord</button>
+                </form>
+            {% else %}
+                <div class="card" style="width: 14rem;">
+                    <img src="{{ app.user.avatar }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ app.user.username }}</h5>
+                        <a href="{{ path('app_logout') }}" class="btn btn-primary">Déconnexion</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </main>
 {% endblock %}
